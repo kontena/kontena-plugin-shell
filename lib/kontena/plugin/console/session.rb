@@ -3,6 +3,7 @@ require 'kontena/plugin/console/command'
 require 'kontena/plugin/console/helpers/tokenize'
 require 'kontena/plugin/console/completer'
 require 'shellwords'
+require 'readline'
 
 module Kontena::Plugin
   module Console
@@ -53,7 +54,7 @@ module Kontena::Plugin
       end
 
       def run
-        puts pastel.green(File.read(__FILE__)[/__END__$(.*)/m, 1])
+        puts pastel.white.on_black(File.read(__FILE__)[/__END__$(.*)/m, 1].split($/).map {|s| s.ljust(79)}.join("\n"))
         puts pastel.green("Kontena Shell #{Kontena::Plugin::Console::VERSION} (C) 2017 Kontena, Inc")
         puts
         puts pastel.blue("Enter 'help' to see a list of commands or 'help <command>' to get help on a specific command.")
