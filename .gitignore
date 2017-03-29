@@ -13,3 +13,4 @@
 .ruby-gemset
 .rvmrc
 .env
+.rspec-local
