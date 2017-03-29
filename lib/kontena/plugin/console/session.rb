@@ -39,22 +39,18 @@ module Kontena::Plugin
 
       def run_command(buf)
         tokens = buf.tokenize
-        runner = Command.commands[tokens.first || context.first || 'kontena']
-        if runner
-          command = runner.new(context, tokens)
-          old_trap = trap('INT', Proc.new { Thread.main[:command_thread] && Thread.main[:command_thread].kill })
-          Thread.main[:command_thread] = Thread.new do
-            command.run
-          end
-          Thread.main[:command_thread].join
-          trap('INT', old_trap)
-        else
-          puts pastel.red("Unknown command")
+        runner = Command.commands[tokens.first || context.first] || Command.commands['kontena']
+        command = runner.new(context, tokens)
+        old_trap = trap('INT', Proc.new { Thread.main[:command_thread] && Thread.main[:command_thread].kill })
+        Thread.main[:command_thread] = Thread.new do
+          command.run
         end
+        Thread.main[:command_thread].join
+        trap('INT', old_trap)
       end
 
       def run
-        puts pastel.white.on_black(File.read(__FILE__)[/__END__$(.*)/m, 1].split($/).map {|s| s.ljust(79)}.join("\n"))
+        puts pastel.green(File.read(__FILE__)[/__END__$(.*)/m, 1].split($/).map {|s| s.ljust(79)}.join("\n"))
         puts pastel.green("Kontena Shell #{Kontena::Plugin::Console::VERSION} (C) 2017 Kontena, Inc")
         puts
         puts pastel.blue("Enter 'help' to see a list of commands or 'help <command>' to get help on a specific command.")

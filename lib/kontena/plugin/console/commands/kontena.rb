@@ -12,12 +12,12 @@ module Kontena::Plugin
 
       def cmd
         cmd = Kontena::MainCommand.new('')
-        cmd.parse(context.to_a)
+        cmd.parse(context.to_a + args)
         cmd
       end
 
       def execute
-        cmd.run(args)
+        cmd.run([])
       rescue Clamp::HelpWanted => ex
         unless args.include?('--help') || args.include?('-h')
           context.concat(args)
