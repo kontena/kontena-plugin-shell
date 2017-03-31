@@ -1,6 +1,5 @@
 require 'kontena/plugin/console/context'
 require 'kontena/plugin/console/command'
-require 'kontena/plugin/console/helpers/tokenize'
 require 'kontena/plugin/console/completer'
 require 'shellwords'
 require 'readline'
@@ -9,7 +8,7 @@ module Kontena::Plugin
   module Console
     class Session
 
-      attr_reader :context, :captures
+      attr_reader :context
 
       def initialize(context)
         @context = Context.new(context)
@@ -24,23 +23,10 @@ module Kontena::Plugin
         File.readlines(history_file).each { |line| Readline::HISTORY.push(line.chomp) } if File.exist?(history_file)
       end
 
-      def start_capturing
-        @captures = []
-        @capturing = true
-      end
-
-      def stop_capturing
-        @capturing = false
-      end
-
-      def capturing?
-        !!@capturing
-      end
-
       def run_command(buf)
-        tokens = buf.tokenize
-        runner = Command.commands[tokens.first || context.first] || Command.commands['kontena']
-        command = runner.new(context, tokens)
+        tokens = buf.split(/\s(?=(?:[^"]|"[^"]*")*$)/).map(&:strip)
+        runner = Console.command(tokens.first) || Console.command(context.first) || Kontena::Plugin::Console::KontenaCommand
+        command = runner.new(context, tokens, self)
         old_trap = trap('INT', Proc.new { Thread.main[:command_thread] && Thread.main[:command_thread].kill })
         Thread.main[:command_thread] = Thread.new do
           command.run
@@ -50,10 +36,11 @@ module Kontena::Plugin
       end
 
       def run
-        puts pastel.green(File.read(__FILE__)[/__END__$(.*)/m, 1].split($/).map {|s| s.ljust(79)}.join("\n"))
-        puts pastel.green("Kontena Shell #{Kontena::Plugin::Console::VERSION} (C) 2017 Kontena, Inc")
+        puts File.read(__FILE__)[/__END__$(.*)/m, 1]
+        puts pastel.green("  Kontena Shell #{Kontena::Plugin::Console::VERSION}  (C) 2017 Kontena, Inc")
         puts
         puts pastel.blue("Enter 'help' to see a list of commands or 'help <command>' to get help on a specific command.")
+
         stty_save = `stty -g`.chomp rescue nil
         at_exit do
           File.write(history_file, Readline::HISTORY.to_a.uniq.last(100).join("\n"))
@@ -62,14 +49,13 @@ module Kontena::Plugin
 
         Readline.completion_proc = Proc.new do |word|
           line = Readline.line_buffer
-          line.extend Kontena::Plugin::Console::Helpers::Tokenize
-          tokens = line.tokenize
+          tokens = line.shellsplit
           tokens.pop unless word.empty?
 
           if context.empty? && tokens.empty?
-            completions = Kontena::MainCommand.recognised_subcommands.flat_map(&:names)
+            completions = Kontena::MainCommand.recognised_subcommands.flat_map(&:names) + Console.commands.keys
           else
-            command = Command.commands[context.first || tokens.first || 'kontena']
+            command = Console.command(context.first || tokens.first || 'kontena')
             if command
               if command.completions.first.respond_to?(:call)
                 completions = command.completions.first.call(context, tokens, word)
@@ -84,24 +70,15 @@ module Kontena::Plugin
           word.empty? ? completions : completions.select { |c| c.start_with?(word) }
         end
 
-        captures = []
-
         while buf = Readline.readline(prompt, true)
-          buf.extend Kontena::Plugin::Console::Helpers::Tokenize
-          tokens = buf.tokenize
-          if capturing?
-            if tokens.first == 'end'
-              stop_capturing
-              captures.each { |c| run_command(c) }
-            else
-              captures << buf
-            end
-          elsif tokens.first == 'begin' && !capturing?
-            start_capturing
+          if buf.strip.empty?
+            Readline::HISTORY.pop
           else
             run_command(buf)
           end
         end
+        puts
+        puts pastel.green("Bye!")
       end
 
       def pastel
@@ -113,9 +90,7 @@ module Kontena::Plugin
       end
 
       def prompt
-        "#{master_name}/#{grid_name} #{pastel.yellow(context)} " +
-          (capturing? ? "#{pastel.red(captures.size)}" : "") +
-          "#{caret} "
+        "#{master_name}/#{grid_name} #{pastel.yellow(context)} #{caret} "
       end
 
       def caret
@@ -133,18 +108,9 @@ module Kontena::Plugin
   end
 end
 __END__
-
-       ,--.  ,----..                      ,--,
-   ,--/  /| /   /   \   .--.--.         ,--.'|
-,---,': / '/   .     : /  /    '.    ,--,  | :
-:   : '/ /.   /   ;.  \  :  /`. / ,---.'|  : '
-|   '   ,.   ;   /  ` ;  |  |--`  |   | : _' |
-'   |  / ;   |  ; \ ; |  :  ;_    :   : |.'  |
-|   ;  ; |   :  | ; | '\  \    `. |   ' '  ; :
-:   '   \.   |  ' ' ' : `----.   \'   |  .'. |
-|   |    '   ;  \; /  | __ \  \  ||   | :  | '
-'   : |.  \   \  ',  / /  /`--'  /'   : |  : ;
-|   | '_\.';   :    / '--'.     / |   | '  ,/
-'   : |     \   \ .'    `--'---'  ;   : ;--'
-;   |,'      `---`                |   ,/
-'---'                             '---'
+[38;5;28m...... [38;5;220m▓▓╗  ▓▓╗ ▓▓▓▓▓▓╗ ▓▓▓▓▓▓▓╗▓▓╗  ▓▓╗ [38;5;28m......
+[38;5;28m...... [38;5;184m▓▓║ ▓▓╔╝▓▓╔═══▓▓╗▓▓╔════╝▓▓║  ▓▓║ [38;5;28m......
+[38;5;28m...... [38;5;148m▓▓▓▓▓╔╝ ▓▓║   ▓▓║▓▓▓▓▓▓▓╗▓▓▓▓▓▓▓║ [38;5;28m......
+[38;5;28m...... [38;5;112m▓▓╔═▓▓╗ ▓▓║   ▓▓║╚════▓▓║▓▓╔══▓▓║ [38;5;28m......
+[38;5;28m...... [38;5;76m▓▓║  ▓▓╗╚▓▓▓▓▓▓╔╝▓▓▓▓▓▓▓║▓▓║  ▓▓║ [38;5;28m......
+[38;5;28m...... [38;5;34m╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝ [38;5;28m......[0m

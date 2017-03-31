@@ -1,5 +1,4 @@
 require 'kontena/main_command'
-require 'kontena/plugin/console/helpers/tokenize'
 
 module Kontena::Plugin
   module Console
@@ -24,6 +23,10 @@ module Kontena::Plugin
         context.concat(tokens[0..arg_index-1])
       end
 
+      def <<(token)
+        context << token
+      end
+
       def empty?
         context.empty?
       end
@@ -39,8 +42,7 @@ module Kontena::Plugin
 
       def normalize(context)
         return [] if context.nil?
-        context.extend Kontena::Plugin::Console::Helpers::Tokenize
-        context.kind_of?(String) ? context.tokenize : context
+        context.kind_of?(String) ? context.shellsplit : context
       end
 
       def to_s

@@ -7,8 +7,8 @@ module Kontena::Plugin
 
       completions 'on', 'off'
 
-      def execute(arg = nil)
-        case arg
+      def execute
+        case args[1]
         when 'true', 'on', '1'
           ENV['DEBUG'] = 'true'
         when 'api'
@@ -18,7 +18,7 @@ module Kontena::Plugin
         when NilClass
           # do nothing
         else
-          puts Kontena.pastel.red("Unknown argument '#{arg}'")
+          puts Kontena.pastel.red("Unknown argument '#{args[1]}'")
         end
         puts "Debug #{Kontena.pastel.send(*ENV['DEBUG'] ? [:green, 'on'] : [:red, 'off'])}"
       end
