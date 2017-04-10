@@ -1,7 +1,7 @@
 require 'tempfile'
 module Kontena
   module Plugin
-    module Console
+    module Shell
       module Callbacks
         class StackFile < Kontena::Callback
 

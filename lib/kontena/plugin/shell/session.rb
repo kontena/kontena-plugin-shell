@@ -1,11 +1,11 @@
-require 'kontena/plugin/console/context'
-require 'kontena/plugin/console/command'
-require 'kontena/plugin/console/completer'
+require 'kontena/plugin/shell/context'
+require 'kontena/plugin/shell/command'
+require 'kontena/plugin/shell/completer'
 require 'shellwords'
 require 'readline'
 
 module Kontena::Plugin
-  module Console
+  module Shell
     class Session
 
       attr_reader :context
@@ -25,7 +25,7 @@ module Kontena::Plugin
 
       def run_command(buf)
         tokens = buf.split(/\s(?=(?:[^"]|"[^"]*")*$)/).map(&:strip)
-        runner = Console.command(tokens.first) || Console.command(context.first) || Kontena::Plugin::Console::KontenaCommand
+        runner = Shell.command(tokens.first) || Shell.command(context.first) || Kontena::Plugin::Shell::KontenaCommand
         command = runner.new(context, tokens, self)
         old_trap = trap('INT', Proc.new { Thread.main[:command_thread] && Thread.main[:command_thread].kill })
         Thread.main[:command_thread] = Thread.new do
@@ -37,7 +37,7 @@ module Kontena::Plugin
 
       def run
         puts File.read(__FILE__)[/__END__$(.*)/m, 1]
-        puts pastel.green("  Kontena Shell #{Kontena::Plugin::Console::VERSION}  (C) 2017 Kontena, Inc")
+        puts pastel.green("  Kontena Shell #{Kontena::Plugin::Shell::VERSION}  (C) 2017 Kontena, Inc")
         puts
         puts pastel.blue("Enter 'help' to see a list of commands or 'help <command>' to get help on a specific command.")
 
@@ -53,9 +53,9 @@ module Kontena::Plugin
           tokens.pop unless word.empty?
 
           if context.empty? && tokens.empty?
-            completions = Kontena::MainCommand.recognised_subcommands.flat_map(&:names) + Console.commands.keys
+            completions = Kontena::MainCommand.recognised_subcommands.flat_map(&:names) + Shell.commands.keys
           else
-            command = Console.command(context.first || tokens.first || 'kontena')
+            command = Shell.command(context.first || tokens.first || 'kontena')
             if command
               if command.completions.first.respond_to?(:call)
                 completions = command.completions.first.call(context, tokens, word)

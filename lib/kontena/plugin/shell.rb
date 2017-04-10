@@ -1,6 +1,6 @@
 module Kontena
   module Plugin
-    module Console
+    module Shell
       def self.commands
         @commands ||= {}
       end
@@ -12,5 +12,5 @@ module Kontena
   end
 end
 
-require 'kontena/plugin/console/version'
-require 'kontena/plugin/console/session'
+require 'kontena/plugin/shell/version'
+require 'kontena/plugin/shell/session'

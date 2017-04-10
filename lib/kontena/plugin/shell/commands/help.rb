@@ -1,7 +1,7 @@
 require 'kontena/main_command'
 
 module Kontena::Plugin
-  module Console
+  module Shell
     class HelpCommand < Command
       command 'help'
       description 'Show help'
@@ -10,7 +10,7 @@ module Kontena::Plugin
 
       def cmd
         full_line = context + args[1..-1]
-        cmd = Console.command(full_line.first) || Console.command('kontena')
+        cmd = Shell.command(full_line.first) || Shell.command('kontena')
       end
 
       def execute
@@ -32,8 +32,8 @@ module Kontena::Plugin
 
         if args.empty? || (args.size == 1 && args.first == 'help')
           puts Kontena.pastel.green('KOSH commands:')
-          Console.commands.each do |name, cmd|
-            next if cmd == Kontena::Plugin::Console::KontenaCommand
+          Shell.commands.each do |name, cmd|
+            next if cmd == Kontena::Plugin::Shell::KontenaCommand
             puts sprintf('    %-29s %s', name, cmd.description)
           end
         end

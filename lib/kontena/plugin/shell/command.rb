@@ -1,12 +1,12 @@
 module Kontena::Plugin
-  module Console
+  module Shell
     class Command
 
       attr_reader :context, :args, :session
 
       def self.command(name = nil)
         return @command if @command
-        Array(name).each { |name| Console.commands[name] = self }
+        Array(name).each { |name| Shell.commands[name] = self }
         @command = name
       end
 
@@ -61,7 +61,7 @@ module Kontena::Plugin
         else
           execute
         end
-      rescue Kontena::Plugin::Console::ExitCommand::CleanExit
+      rescue Kontena::Plugin::Shell::ExitCommand::CleanExit
         puts Kontena.pastel.green("Bye!")
         exit 0
       rescue => ex

@@ -1,5 +1,5 @@
 module Kontena::Plugin
-  module Console
+  module Shell
     class ContextUpCommand < Command
       command '..'
       description 'Go up in context'

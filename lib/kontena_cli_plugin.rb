@@ -1,5 +1,5 @@
-require_relative 'kontena/plugin/console'
-require_relative 'kontena/plugin/console/console_command'
-require_relative 'kontena/plugin/console/callbacks/stack_file'
+require_relative 'kontena/plugin/shell'
+require_relative 'kontena/plugin/shell/shell_command'
+require_relative 'kontena/plugin/shell/callbacks/stack_file'
 
-Kontena::MainCommand.register("console", "Kontena shell", Kontena::Plugin::Console::ConsoleCommand)
+Kontena::MainCommand.register("shell", "Kontena shell", Kontena::Plugin::Shell::ShellCommand)

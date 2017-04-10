@@ -1,5 +1,5 @@
 module Kontena::Plugin
-  module Console
+  module Shell
     class BatchDoCommand < SubCommand
 
       command 'do'

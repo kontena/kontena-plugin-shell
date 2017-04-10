@@ -1,7 +1,7 @@
-require 'kontena/plugin/console/commands/batch_do'
+require 'kontena/plugin/shell/commands/batch_do'
 
 module Kontena::Plugin
-  module Console
+  module Shell
     class BatchCommand < Command
 
       command 'batch'
@@ -21,7 +21,7 @@ module Kontena::Plugin
         end
       }
 
-      subcommands [Kontena::Plugin::Console::BatchDoCommand]
+      subcommands [Kontena::Plugin::Shell::BatchDoCommand]
       completions *subcommands.keys
     end
   end
