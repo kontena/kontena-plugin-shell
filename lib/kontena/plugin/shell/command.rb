@@ -11,7 +11,7 @@ module Kontena::Plugin
       end
 
       def self.subcommands(subcommands = nil)
-        return @subcommands if @subcommands
+        return @subcommands if instance_variable_defined?(:@subcommands)
         @subcommands = {}
         Array(subcommands).each do |sc|
           Array(sc.command).each do |name|
