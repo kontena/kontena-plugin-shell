@@ -1,16 +1,16 @@
-# Kontena Console
+# Kontena Shell
 
 ## Installation
 
 Add this to your cli gemfile:
 
 ```
-gem 'kontena-plugin-console', github: 'kontena/kontena-plugin-console'
+gem 'kontena-plugin-shell', github: 'kontena/kontena-plugin-shell'
 ```
 
 run `bundle`
 
-Now you should see a "kontena console" subcommand when running 'bin/kontena'.
+Now you should see a "kontena shell" subcommand when running 'bin/kontena'.
 
 ## Usage
 
@@ -37,7 +37,7 @@ master > ..
 To disable kontena commands:
 
 ```
-$ KOSH_DISABLED_COMMANDS="master use,grid use" kontena console
+$ KOSH_DISABLED_COMMANDS="master use,grid use" kontena shell
 ```
 
 ## Contributing

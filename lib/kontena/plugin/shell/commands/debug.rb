@@ -1,5 +1,5 @@
 module Kontena::Plugin
-  module Console
+  module Shell
     class DebugCommand < Command
       command 'debug'
       description 'Toggle debug output'

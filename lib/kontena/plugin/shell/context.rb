@@ -1,7 +1,7 @@
 require 'kontena/main_command'
 
 module Kontena::Plugin
-  module Console
+  module Shell
     class Context
 
       attr_reader :context

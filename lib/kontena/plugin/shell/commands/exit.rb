@@ -1,8 +1,8 @@
 module Kontena::Plugin
-  module Console
+  module Shell
     class ExitCommand < Command
       command 'exit'
-      description 'Quit console'
+      description 'Quit shell'
       help 'Enter "exit" to quit.'
 
       completions nil

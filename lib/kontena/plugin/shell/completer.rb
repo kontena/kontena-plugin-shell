@@ -2,7 +2,7 @@
 require 'kontena/cli/common'
 require 'yaml'
 
-module Kontena::Plugin::Console
+module Kontena::Plugin::Shell
   module Completer
     class Helper
       include Kontena::Cli::Common

@@ -1,5 +1,5 @@
 module Kontena::Plugin
-  module Console
+  module Shell
     class ContextTopCommand < Command
       command '/'
       description 'Clear context'
@@ -9,7 +9,7 @@ module Kontena::Plugin
         if args.empty?
           context.top
         else
-          Kontena::Plugin::Console::KontenaCommand.new([], args[1..-1]).run
+          Kontena::Plugin::Shell::KontenaCommand.new([], args[1..-1]).run
         end
       end
     end
