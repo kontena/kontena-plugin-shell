@@ -38,7 +38,7 @@ module Kontena::Plugin
       def run
         puts File.read(__FILE__)[/__END__$(.*)/m, 1]
         puts
-        puts pastel.green("Version #{Kontena::Plugin::Console::VERSION}")
+        puts pastel.green("Version #{Kontena::Plugin::Shell::VERSION}")
         puts pastel.blue("Enter 'help' to see a list of commands or 'help <command>' to get help on a specific command.")
 
         stty_save = `stty -g`.chomp rescue nil
