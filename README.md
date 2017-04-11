@@ -1,48 +1,85 @@
 # Kontena Shell
 
+[![asciicast](kosh.gif)](https://asciinema.org/a/58j375bs9zqn3x33wsir7drsa)
+
+Kontena Shell, or KOSH for short, is an interactive console interface for the [Kontena CLI](https://github.com/kontena/kontena).
+
+Features:
+
+- Command context switching, for example jump to stack context and use "ls" and "install" instead of "kontena stack ls" and "kontena stack install"
+- Prompt shows current master and grid
+- Command history
+- Batch commands
+- Tab completion
+- ...
+
 ## Installation
 
-Add this to your cli gemfile:
-
 ```
-gem 'kontena-plugin-shell', github: 'kontena/kontena-plugin-shell'
+kontena plugin install shell
 ```
-
-run `bundle`
-
-Now you should see a "kontena shell" subcommand when running 'bin/kontena'.
 
 ## Usage
 
-Enter kontena commands without `kontena`:
+Starting the console:
 
 ```
-> master ls
+$ kontena shell
 ```
 
-Go into master context:
+or:
 
 ```
-> master
-master > users ls
+kosh
 ```
 
-Go up the context:
+You can enter regular Kontena CLI subcommands without `kontena`:
 
 ```
-master > ..
->
+kontena-master/grid-name > master ls
+Name                     Url
+kontena-master           http://192.168.66.100:8080
 ```
 
-To disable kontena commands:
+Or enter a command context:
 
 ```
-$ KOSH_DISABLED_COMMANDS="master use,grid use" kontena shell
+> grid
+kontena-master/grid-name grid > use foo
+kontena-master/foo grid > _
+```
+
+To go up in the context, use '..':
+
+```
+kontena-master/foo grid > ..
+kontena-master/foo > ..
+```
+
+Or go to top with '/':
+
+```
+kontena-master/foo > master user
+kontena-master/foo master user > /
+kontena-master/foo > _
+```
+
+Use 'help' to see help:
+
+```
+kontena-master/foo grid > help
+Usage:
+      SUBCOMMAND [ARG] ...
+
+Parameters:
+    SUBCOMMAND                    subcommand
+    [ARG] ...                     subcommand arguments
+...
 ```
 
 ## Contributing
 
-1. Fork it ( https://github.com/kontena/kontena-plugin-digitalocean )
+1. Fork it ( https://github.com/kontena/kontena-plugin-shell )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
@@ -50,4 +87,4 @@ $ KOSH_DISABLED_COMMANDS="master use,grid use" kontena shell
 
 ## License
 
-Kontena is licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE.txt) for full license text.
+Kontena Shell Plugin is licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE.txt) for full license text.
