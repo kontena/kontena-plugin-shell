@@ -1,0 +1,16 @@
+language: ruby
+rvm:
+  - 2.1.10
+  - 2.2.6
+  - 2.3.3
+  - 2.4.1
+#env:
+#  - secure: ""
+cache: bundler
+script: bundle install && bundle exec rspec spec/
+#deploy:
+#  provider: rubygems
+#  api_key: $GEM_TOKEN
+#  gem: kontena-plugin-shell
+#  on:
+#    tags: true
