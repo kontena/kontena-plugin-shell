@@ -1,3 +1,4 @@
+require 'kontena/plugin/shell/command'
 require 'kontena/main_command'
 require 'kontena/plugin/shell/completer'
 

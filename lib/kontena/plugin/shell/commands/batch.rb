@@ -1,3 +1,4 @@
+require 'kontena/plugin/shell/command'
 require 'kontena/plugin/shell/commands/batch_do'
 
 module Kontena::Plugin

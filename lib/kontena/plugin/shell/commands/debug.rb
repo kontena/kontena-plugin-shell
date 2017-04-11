@@ -1,3 +1,5 @@
+require 'kontena/plugin/shell/command'
+
 module Kontena::Plugin
   module Shell
     class DebugCommand < Command
@@ -5,7 +7,7 @@ module Kontena::Plugin
       description 'Toggle debug output'
       help 'Use debug on/off to toggle debug output.'
 
-      completions 'on', 'off'
+      completions 'on', 'off', 'api'
 
       def execute
         case args[1]

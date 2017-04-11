@@ -5,7 +5,7 @@ module Kontena::Plugin
       attr_reader :context, :args, :session
 
       def self.command(name = nil)
-        return @command if @command
+        return @command if instance_variable_defined?(:@command)
         Array(name).each { |name| Shell.commands[name] = self }
         @command = name
       end
@@ -41,8 +41,8 @@ module Kontena::Plugin
       end
 
       def initialize(context = nil, args = nil, session = nil)
-        @context = context
         @args = Array(args)
+        @context = context
         @session = session
       end
 
@@ -70,6 +70,8 @@ module Kontena::Plugin
       end
     end
 
+    # SubCommand is just like a command, except it doesn't register the
+    # class to Shell.commands.
     class SubCommand < Command
       def self.command(name = nil)
         @command ||= name

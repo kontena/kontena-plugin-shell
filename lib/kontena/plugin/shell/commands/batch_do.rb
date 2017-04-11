@@ -1,3 +1,5 @@
+require 'kontena/plugin/shell/command'
+
 module Kontena::Plugin
   module Shell
     class BatchDoCommand < SubCommand
