@@ -9,7 +9,10 @@ module Kontena::Plugin
 
       def execute
         if args[1] && session
+          old_context = context.to_a.clone
+          context.top
           session.run_command(args[1..-1].join(' '))
+          context.concat(old_context)
         else
           context.top
         end
