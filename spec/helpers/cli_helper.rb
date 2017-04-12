@@ -3,10 +3,6 @@ module CliHelper
     base.class_eval do
       let(:client) { double(:client) }
       let(:config) { double(:config) }
-#      let(:stdout) { StringIO.new }
-#      let(:stderr) { StringIO.new }
-#      let(:stdin) { StringIO.new }
-#      let(:output) { { stderr: [], stdout: [] } }
 
       before(:each) do
         allow(Kontena::Client).to receive(:new).and_return(client)
@@ -23,13 +19,6 @@ module CliHelper
           )
         )
         allow(config).to receive(:current_grid).and_return('testgrid')
-
-#        allow(stdout).to receive(:anything).and_call_original
-#        allow(stderr).to receive(:anything).and_call_original
-
-#        $stdout = stdout
-#        $stderr = stderr
-
         allow(Dir).to receive(:home).and_return('/tmp/')
       end
 
@@ -37,8 +26,6 @@ module CliHelper
         RSpec::Mocks.space.proxy_for(File).reset
         RSpec::Mocks.space.proxy_for(Kontena::Client).reset
         RSpec::Mocks.space.proxy_for(Kontena::Cli::Config).reset
-#        $stdout = STDOUT
-#        $stderr = STDERR
       end
     end
   end
