@@ -1,5 +1,3 @@
-require 'kontena/main_command'
-
 module Kontena::Plugin
   module Shell
     class Context
