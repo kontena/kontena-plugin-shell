@@ -1,6 +1,13 @@
 #!/usr/bin/env ruby
 
+require 'kontena/plugin/shell/version'
+
+if ARGV.first == '--version'
+  puts "kontena-shell #{Kontena::Plugin::Shell::VERSION}"
+  exit 0
+end
+
 ARGV.unshift('shell')
-require 'kontena_cli'
+require 'kontena_cli' unless Kontena.const_defined?(:Cli)
 Kontena::PluginManager.instance.init
 Kontena::MainCommand.run
