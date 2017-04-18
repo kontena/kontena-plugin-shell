@@ -4,13 +4,13 @@ rvm:
   - 2.2.6
   - 2.3.3
   - 2.4.1
-#env:
-#  - secure: ""
+env:
+  - secure: "mEKbZq10I4OSMwxFog3LNuZtYnofjQsTqP/KP+5EtDiRIwqBSXvhI76ySG7XQDNuCyf9e+kasDPjguMR1iJPRl+Pygl8N4JNbErP2OauF2FO/m1ohPhsI2L/ZcBxCRD0IlgVaf/tka296YZwYnsr5wins+2xNcO+eDy1m4UKilBzt+1giZyrg0/7e1HituAyUNU3BNdcMc1/l98U5Y2s3DQU/SMDDx4+faLZGSI70xbBoZW8IV/NIdSVRH/9dbGr9mZr0+fLKcFmdFJefMzQHJm8zckVHIFdT9wfJCjCZgwPi6mPqc8q0Q6qM4F0xX1lSWN6jxXSVpIY9Xc5GNFQanRqyIg9tIwN40zbuUWXmI4YI4OttmsBS+lYyom+QXgTdECavE+qkTVZaYBoidXj38aCW6nqvw+qFQVr0fSMCF1RyRSLmq7pzDxxkb0bBjeqeZdEwELf+8kLR9liwQ+C+Lx3YOpu7ZFcJVIYcpq2MUak/BKqGO8swZ7F0t/xl150XoQrqIJGe/1hZ+zUZLpAbcnAfAWUCEWfu6QYk3eEObkrW1u2yZbuZCFSFhKaoH7nuxD1kkqavbHUwWUqp6Aek0UjAC+8L+DjFrCL/zqtn51gdoQ8cby5KHLnyFWPo6t7DHFz01X3iy41rTuEnpv+eLvyZ8eq9GmkeB1kEMEwih8="
 cache: bundler
 script: bundle install && bundle exec rspec spec/
-#deploy:
-#  provider: rubygems
-#  api_key: $GEM_TOKEN
-#  gem: kontena-plugin-shell
-#  on:
-#    tags: true
+deploy:
+  provider: rubygems
+  api_key: $GEM_TOKEN
+  gem: kontena-plugin-shell
+  on:
+    tags: true
