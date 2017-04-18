@@ -1,5 +1,5 @@
 require 'kontena/plugin/shell/command'
-require 'kontena/main_command'
+require 'kontena/main_command' unless Kontena.const_defined?(:MainCommand)
 require 'kontena/plugin/shell/completer'
 
 module Kontena::Plugin
@@ -13,7 +13,9 @@ module Kontena::Plugin
 
       def cmd
         cmd = Kontena::MainCommand.new('')
-        cmd.parse(context.to_a + args)
+        cmdline = context.to_a + args
+        cmdline.shift if cmdline.first == 'kontena'
+        cmd.parse(cmdline)
         cmd
       end
 
