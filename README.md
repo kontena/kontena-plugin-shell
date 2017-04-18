@@ -1,6 +1,6 @@
 # Kontena Shell
 
-[![Build Status](https://travis-ci.com/kontena/kontena-plugin-shell.svg?branch=master)](https://travis-ci.com/kontena/kontena-plugin-shell)
+[![Build Status](https://travis-ci.org/kontena/kontena-plugin-shell.svg?branch=master)](https://travis-ci.org/kontena/kontena-plugin-shell)
 [![Join the chat at https://slack.kontena.io](https://slack.kontena.io/badge.svg)](https://slack.kontena.io)
 [![Join the chat at https://gitter.im/kontena/kontena](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/kontena/kontena?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
