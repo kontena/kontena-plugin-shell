@@ -33,5 +33,5 @@ Usage: kosh [options] [initial_context]
 
   Description:
     Kontena Shell, aka Kosh, is an interactive console for using kontena-cli commands.
-    The context feature reduces the need to repeating command prefixes such as
+    The context feature reduces the need to repeat command prefixes such as
     "kontena stack monitor" becomes just "monitor" when you're in the stack context.
