@@ -1,6 +1,7 @@
-require 'kontena/plugin/shell/command'
 require 'kontena/main_command' unless Kontena.const_defined?(:MainCommand)
+require 'kontena/plugin/shell/command'
 require 'kontena/plugin/shell/completer'
+require 'kontena/plugin/shell/context'
 
 module Kontena::Plugin
   module Shell

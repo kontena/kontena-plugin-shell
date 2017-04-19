@@ -1,16 +1,11 @@
 # this is mostly just a wrapped version of the completer in cli
-require 'kontena/cli/common'
+require 'kontena/cli/common' unless Kontena.const_defined?(:Cli) && Kontena::Cli.const_defined?(:Common)
 require 'yaml'
 
 module Kontena::Plugin::Shell
   module Completer
     class Helper
       include Kontena::Cli::Common
-
-      def client
-        token = require_token
-        super(token)
-      end
 
       def grids
         client.get("grids")['grids'].map{|grid| grid['id']}
