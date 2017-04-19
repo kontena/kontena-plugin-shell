@@ -6,7 +6,8 @@ module Kontena::Plugin
 
       def self.command(name = nil)
         return @command if instance_variable_defined?(:@command)
-        Array(name).each { |name| Shell.commands[name] = self }
+        disabled_commands = ENV['KOSH_DISABLED_COMMANDS'].to_s.split(/,/)
+        Array(name).each { |name| Shell.commands[name] = self unless disabled_commands.include?(name) }
         @command = name
       end
 

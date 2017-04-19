@@ -1,6 +1,37 @@
 #!/usr/bin/env ruby
 
+require 'pathname'
+path = Pathname.new(File.dirname(__FILE__)).join('../lib').realpath.to_s
+$LOAD_PATH.unshift(path) unless $LOAD_PATH.include?(path)
+
+require 'kontena_cli_plugin'
+
+if ARGV.first == '--version' || ARGV.first == '-v'
+  puts "kontena-shell #{Kontena::Plugin::Shell::VERSION}"
+  exit 0
+elsif ARGV.first == '--help' || ARGV.first == '-h'
+  puts DATA.read
+  exit 0
+end
+
 ARGV.unshift('shell')
-require 'kontena_cli'
+
 Kontena::PluginManager.instance.init
 Kontena::MainCommand.run
+__END__
+Usage: kosh [options] [initial_context]
+
+  Options:
+    -v, --version            Display kosh version
+    -h, --help               Display this help
+
+  Arguments:
+    initial_context          Start kosh in an initial context, for example 'kosh stack' will open kosh with stack context.
+
+  Summary:
+    Interactive console for kontena-cli
+
+  Description:
+    Kontena Shell, aka Kosh, is an interactive console for using kontena-cli commands.
+    The context feature reduces the need to repeat command prefixes such as
+    "kontena stack monitor" becomes just "monitor" when you're in the stack context.
