@@ -19,27 +19,27 @@ Features:
 
 ## Installation
 
-```
-kontena plugin install shell
+```console
+$ kontena plugin install shell
 ```
 
 ## Usage
 
 Starting the console:
 
-```
+```console
 $ kontena shell
 ```
 
 or:
 
-```
-kosh
+```console
+$ kosh
 ```
 
 You can enter regular Kontena CLI subcommands without `kontena`:
 
-```
+```batch
 kontena-master/grid-name > master ls
 Name                     Url
 kontena-master           http://192.168.66.100:8080
@@ -47,7 +47,7 @@ kontena-master           http://192.168.66.100:8080
 
 Or enter a command context:
 
-```
+```batch
 kontena-master/grid-name > grid
 kontena-master/grid-name grid > ls
 Name                           Nodes    Services     Users
@@ -57,14 +57,14 @@ test                           0        0            2
 
 To go up in the context, use `..`:
 
-```
+```batch
 kontena-master/foo grid > ..
 kontena-master/foo > _
 ```
 
 Or go to top with `/`:
 
-```
+```batch
 kontena-master/foo > master user
 kontena-master/foo master user > /
 kontena-master/foo > _
@@ -72,7 +72,7 @@ kontena-master/foo > _
 
 Or run commands from another context:
 
-```
+```batch
 kontena-master/foo master user > / grid ls
 Name                           Nodes    Services     Users
 grid-name *                    2        1            1
@@ -81,7 +81,7 @@ kontena-master/foo master user > _
 
 Use `help` to see help:
 
-```
+```batch
 kontena-master/foo grid > help
 Usage:
       SUBCOMMAND [ARG] ...
