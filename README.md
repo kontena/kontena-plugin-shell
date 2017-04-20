@@ -10,7 +10,7 @@ Kontena Shell, or KOSH for short, is an interactive console interface for the [K
 
 Features:
 
-- Command context switching, for example jump to stack context and use "ls" and "install" instead of "kontena stack ls" and "kontena stack install"
+- Command context switching, for example jump to stack context and use `ls` and `install` instead of `kontena stack ls` and `kontena stack install`
 - Prompt shows current master and grid
 - Command history
 - Batch commands
@@ -48,19 +48,21 @@ kontena-master           http://192.168.66.100:8080
 Or enter a command context:
 
 ```
-> grid
-kontena-master/grid-name grid > use foo
-kontena-master/foo grid > _
+kontena-master/grid-name > grid
+kontena-master/grid-name grid > ls
+Name                           Nodes    Services     Users
+grid-name *                    2        1            1
+test                           0        0            2
 ```
 
-To go up in the context, use '..':
+To go up in the context, use `..`:
 
 ```
 kontena-master/foo grid > ..
-kontena-master/foo > ..
+kontena-master/foo > _
 ```
 
-Or go to top with '/':
+Or go to top with `/`:
 
 ```
 kontena-master/foo > master user
@@ -68,7 +70,16 @@ kontena-master/foo master user > /
 kontena-master/foo > _
 ```
 
-Use 'help' to see help:
+Or run commands from another context:
+
+```
+kontena-master/foo master user > / grid ls
+Name                           Nodes    Services     Users
+grid-name *                    2        1            1
+kontena-master/foo master user > _
+```
+
+Use `help` to see help:
 
 ```
 kontena-master/foo grid > help
