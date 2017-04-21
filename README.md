@@ -4,7 +4,7 @@
 [![Join the chat at https://slack.kontena.io](https://slack.kontena.io/badge.svg)](https://slack.kontena.io)
 [![Join the chat at https://gitter.im/kontena/kontena](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/kontena/kontena?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-[![asciicast](kosh.gif)](https://asciinema.org/a/58j375bs9zqn3x33wsir7drsa)
+[![asciicast](kosh.gif)](https://asciinema.org/a/afj8mw5yc4itvmpvmx0pu13ha)
 
 Kontena Shell, or KOSH for short, is an interactive console interface for the [Kontena CLI](https://github.com/kontena/kontena).
 
