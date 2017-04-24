@@ -46,6 +46,9 @@ module Kontena::Plugin
           system('stty', stty_save) if stty_save
         end
 
+        # Hook stack command kontena.yml content prompting
+        require 'kontena/plugin/shell/callbacks/stack_file'
+
         Readline.completion_proc = Proc.new do |word|
           line = Readline.line_buffer
           tokens = line.shellsplit

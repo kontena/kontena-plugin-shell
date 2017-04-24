@@ -6,6 +6,5 @@ require 'kontena_cli' unless Object.const_defined?(:Kontena) && Kontena.const_de
 
 require 'kontena/plugin/shell'
 require 'kontena/plugin/shell/shell_command'
-require 'kontena/plugin/shell/callbacks/stack_file'
 
 Kontena::MainCommand.register("shell", "Kontena shell", Kontena::Plugin::Shell::ShellCommand)
