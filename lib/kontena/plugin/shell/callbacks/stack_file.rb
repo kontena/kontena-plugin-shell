@@ -5,12 +5,12 @@ module Kontena
       module Callbacks
         class StackFile < Kontena::Callback
 
-          matches_commands 'stacks install', 'stacks deploy', 'stacks validate', 'stacks upgrade'
+          matches_commands 'stacks install', 'stacks validate', 'stacks upgrade'
 
           def before
             Kontena::Cli::Stacks::YAML::Reader.class_eval do
               def self.new(*args)
-                if args.first == 'kontena.yml'
+                if args.first == 'kontena.yml' && !File.exist?('kontena.yml')
                   @tempfile = Tempfile.new('kontena.yml')
                   @tempfile.write(Kontena.prompt.multiline("Enter or paste a stack YAML").join)
                   @tempfile.close
