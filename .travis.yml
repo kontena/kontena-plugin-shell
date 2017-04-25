@@ -1,4 +1,7 @@
+sudo: required
 language: ruby
+services:
+  - docker
 rvm:
   - 2.1.10
   - 2.2.6
@@ -14,3 +17,7 @@ deploy:
   gem: kontena-plugin-shell
   on:
     tags: true
+after_deploy:
+  - docker build -t kontena/kosh:latest .
+  - docker tag kontena/kosh:latest kontena/kosh:latest
+  - docker push kontena/kosh:latest
