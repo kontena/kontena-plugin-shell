@@ -19,6 +19,9 @@ deploy:
   on:
     tags: true
 after_deploy:
-  - docker build -t kontena/kosh:latest .
-  - docker tag kontena/kosh:latest kontena/kosh:latest
-  - docker push kontena/kosh:latest
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+      docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+      docker build -t kontena/kosh:latest .;
+      docker tag kontena/kosh:latest kontena/kosh:latest;
+      docker push kontena/kosh:latest;
+    fi
