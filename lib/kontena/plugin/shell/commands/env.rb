@@ -4,9 +4,11 @@ module Kontena::Plugin
   module Shell
     class EnvCommand < Command
       command 'env'
-      description 'Print environment'
-      help 'Use "help <command>" to see help for a specific command'
-      #completions -> (context, tokens, word) { Kontena::Completer.complete(context.to_a + tokens) }
+      description 'Show or set environment variables'
+      help "Use 'env' to display all environment variables.\n" +
+           "Use 'env HOME' to display the value of $HOME.\n" +
+           "Use 'env KONTENA_URL=https://foo.example.com' to set an environment variable."
+      completions -> (context, tokens, word) { ENV.keys.select { |k| k.start_with?(word) } }
 
       def execute
         if args[1] && args[1].include?('=')
