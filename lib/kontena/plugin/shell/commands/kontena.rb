@@ -21,7 +21,11 @@ module Kontena::Plugin
       end
 
       def execute
-        cmd.run([])
+        if cmd.subcommand_name && cmd.subcommand_name == 'shell'
+          puts Kontena.pastel.red("Already running inside KOSH")
+        else
+          cmd.run([])
+        end
       rescue Clamp::HelpWanted => ex
         unless args.include?('--help') || args.include?('-h')
           context.concat(args)
