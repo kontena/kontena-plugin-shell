@@ -15,11 +15,12 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://github.com/kontena/kontena-plugin-shell"
   spec.license       = "Apache-2.0"
 
-  spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features|\.gif)/}) }
+  spec.files         = Dir['LICENSE.txt', 'README.md', 'lib/**/*.rb', 'spec/**/*.rb', 'bin/*', '.rspec']
+  spec.test_files    = spec.files.grep(%r{^spec//}) { |f| File.basename(f) } + ['.rspec']
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_runtime_dependency 'kontena-cli', '>= 1.0.0.rc1'
+  spec.add_runtime_dependency 'kontena-cli', '~> 1.0'
   spec.add_development_dependency "bundler", "~> 1.11"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.5"
