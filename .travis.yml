@@ -25,10 +25,10 @@ deploy:
   gem: kontena-plugin-shell
   on:
     tags: true
-    rvm: 2.3.3
+    rvm: 2.4.1
 
 after_success:
-  - if [ "TRAVIS_RUBY_VERSION" == "2.4.1"] && [ ! -z "$DOCKER_USERNAME" ] && [ ! -z "$TRAVIS_TAG" ]; then
+  - if [ "$TRAVIS_RUBY_VERSION" == "2.4.1"] && [ ! -z "$DOCKER_PASSWORD" ] && [ ! -z "$TRAVIS_TAG" ]; then
     docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
     docker build -t kontena/kosh:latest . &&
     docker tag kontena/kosh:latest kontena/kosh:latest &&
