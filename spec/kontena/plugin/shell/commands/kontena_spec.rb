@@ -4,6 +4,10 @@ describe Kontena::Plugin::Shell::KontenaCommand do
       expect{described_class.new([], ['version', '--cli']).run}.to output(/cli:/).to_stdout
     end
 
+    it 'should not run a shell inside a shell' do
+      expect{described_class.new([], ['shell']).run}.to output(/Already/).to_stdout
+    end
+
     it 'should switch context if a command with subcommands is run without args' do
       context = Kontena::Plugin::Shell::Context.new(nil)
       described_class.new(context, ['master', 'users']).run
