@@ -12,7 +12,7 @@ module Kontena::Plugin
           old_context = context.to_a.clone
           context.top
           session.run_command(args[1..-1].join(' '))
-          context.concat(old_context)
+          context.concat(old_context) if context.empty?
         else
           context.top
         end

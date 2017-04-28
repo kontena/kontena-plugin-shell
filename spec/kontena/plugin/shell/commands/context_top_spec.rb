@@ -11,5 +11,12 @@ describe Kontena::Plugin::Shell::ContextTopCommand do
     described_class.new(session.context, ['/', 'dog', 'cat'], session).run
     expect(session.context.to_s).to eq 'foo bar'
   end
+
+  it 'runs commands under top context and changes to that context if it changes context' do
+    session = Kontena::Plugin::Shell::Session.new(['foo', 'bar'])
+    expect(session).to receive(:run_command).with('dog cat') { session.context.context=['dog', 'cat'] }
+    described_class.new(session.context, ['/', 'dog', 'cat'], session).run
+    expect(session.context.to_s).to eq 'dog cat'
+  end
 end
 
