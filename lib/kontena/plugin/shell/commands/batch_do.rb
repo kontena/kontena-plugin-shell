@@ -6,7 +6,7 @@ module Kontena::Plugin
 
       command 'do'
       description 'Run a batch of commands'
-      help "Example:\n> batch do\n> master users ls\n> master ls\n> end"
+      help "Example:\n> batch do\n> master user ls\n> master ls\n> end"
       completions nil
 
       def execute

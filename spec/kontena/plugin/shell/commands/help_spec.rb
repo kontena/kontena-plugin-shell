@@ -8,6 +8,6 @@ describe Kontena::Plugin::Shell::HelpCommand do
   end
 
   it 'displays help for current context' do
-    expect{described_class.new(Kontena::Plugin::Shell::Context.new('master users'), ['help']).run}.to output(/SUBCOMMAND.*invite.*list.*/m).to_stdout
+    expect{described_class.new(Kontena::Plugin::Shell::Context.new('master user'), ['help']).run}.to output(/SUBCOMMAND.*invite.*list.*/m).to_stdout
   end
 end

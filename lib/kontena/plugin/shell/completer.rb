@@ -132,10 +132,10 @@ module Kontena::Plugin::Shell
           completion.push sub_commands
         end
       when 'master'
-        sub_commands = %w(list use users current remove rm config cfg login logout token join audit-log init-cloud)
+        sub_commands = %w(list use user current remove rm config cfg login logout token join audit-log init-cloud)
         if words[1] && words[1] == 'use'
           completion.push helper.master_names
-        elsif words[1] && words[1] == 'users'
+        elsif words[1] && words[1] == 'user'
           users_sub_commands = %(invite list role)
           completion.push users_sub_commands
         elsif words[1] && ['config', 'cfg'].include?(words[1])
