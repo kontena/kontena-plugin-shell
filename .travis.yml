@@ -28,8 +28,8 @@ deploy:
     rvm: 2.4.1
 
 after_success:
-  - if [ "$TRAVIS_RUBY_VERSION" == "2.4.1"] && [ ! -z "$DOCKER_PASSWORD" ] && [ ! -z "$TRAVIS_TAG" ]; then
-    docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+  - if [ "$TRAVIS_RUBY_VERSION" == "2.4.1"] && [ ! -z "$DOCKER_HUB_PASSWORD" ] && [ ! -z "$TRAVIS_TAG" ]; then
+    docker login -u="$DOCKER_HUB_USERNAME" -p="$DOCKER_HUB_PASSWORD" &&
     docker build -t kontena/kosh:edge . &&
     docker tag kontena/kosh:edge kontena/kosh:edge &&
     docker push kontena/kosh:edge;
