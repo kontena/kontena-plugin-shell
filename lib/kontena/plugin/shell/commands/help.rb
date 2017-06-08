@@ -31,7 +31,8 @@ module Kontena::Plugin
         end
 
         if args.empty? || (args.size == 1 && args.first == 'help')
-          puts Kontena.pastel.green('KOSH commands:')
+          puts
+          puts 'Kontena Shell commands:'
           Shell.commands.each do |name, cmd|
             next if cmd == Kontena::Plugin::Shell::KontenaCommand
             puts sprintf('    %-29s %s', name, cmd.description)
