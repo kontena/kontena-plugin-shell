@@ -32,7 +32,7 @@ module Kontena::Plugin
 
         if args.empty? || (args.size == 1 && args.first == 'help')
           puts
-          puts 'Kontena Shell commands:')
+          puts 'Kontena Shell commands:'
           Shell.commands.each do |name, cmd|
             next if cmd == Kontena::Plugin::Shell::KontenaCommand
             puts sprintf('    %-29s %s', name, cmd.description)
