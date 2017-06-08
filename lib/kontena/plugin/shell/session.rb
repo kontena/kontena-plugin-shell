@@ -38,7 +38,7 @@ module Kontena::Plugin
       def run
         puts File.read(__FILE__)[/__END__$(.*)/m, 1]
         puts "Kontena Shell v#{Kontena::Plugin::Shell::VERSION} (c) 2017 Kontena"
-        puts pastel.blue("Enter 'help' to see a list of commands or 'help <command>' to get help on a specific command.")
+        puts pastel.green("Enter 'help' to see a list of commands or 'help <command>' to get help on a specific command.")
 
         stty_save = `stty -g`.chomp rescue nil
         at_exit do
@@ -100,11 +100,11 @@ module Kontena::Plugin
       end
 
       def master_name
-        config.current_master ? pastel.green(config.current_master.name) : pastel.red('<no master>')
+        config.current_master ? pastel.blue(config.current_master.name) : pastel.red('<no master>')
       end
 
       def grid_name
-        config.current_grid ? pastel.green(config.current_grid) : pastel.red('<no grid>')
+        config.current_grid ? pastel.blue(config.current_grid) : pastel.red('<no grid>')
       end
     end
   end
