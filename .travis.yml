@@ -6,31 +6,29 @@ rvm:
   - 2.1.10
   - 2.2.6
   - 2.3.3
-
-matrix:
-  include:
-    - rvm: 2.4.1
-      env:
-        - secure: "kvAs0Ys79sVx24cxuhJW1L4ABkemMCD2G767e8Vjp8VAbmgJBOiD+hU11ADe5/1ZDrDZ5NVsTqucVI4lyLohLzLU61AwQsgpNPcsBtBqhHvWdYnTVZhRz7v9xirXa3heS/jbxJxrWBgCRdgBLj1xWBHhQALJSDynKtqm5HbDOrfsB621KQ+WsunU5swou+cxKTye3nJZVDABaH8w8qFEJ0aUkeqNT2O4Tfgbr3reu6DQGKBpBuuSAzlwW1SFjaosW2Yedp+hpRgm1j9HHbao7i8dqv3BXckeMbEv4DUCWQqOWOsj62izTMDRqULNxxU547MPG9O7sq+yW4eC6B9SV4PqyCLeZVpRAgbz/u6YQmRLCquOyoWfaEKzWkC3kqmzn84K83qbvYW7GgG9p/JOCmFXb+StyvORV8LL6iB/D/W2oII3PTG7Mtj+6yRdzRGenYWY95LOTrR78VsCEy6iuAsnwsGKJmsiW/n7Yapgqf6mFwSvCJnMe0/POioo//TkuSSc7smGWQkLOatut0CNBaceFABMRRip4xGE8LUt1j7ql0qDOVoReqKe0XzaNuDi+Eu9cPL1cCSC4g1MWxFWsprYudaiHVY+k3F4nEsV+Mivms8uck2ae+Wv4blY2F5yX7VUP/F/nY57VIaTWbo4y8+TegNNTt6BiqAEF8cI8B4=" # for rubygems
-    - rvm: 2.4.1
-      env:
-        - secure: "qj93XeMlWFsbXWBEBEOKMJTftM6FNlU5DdZRuzFmtysMS4KxY9z/PQuZ3+aldhUrFqghHwLLGYWIDtAPZb0k7VOM6jZUpXwam13rMkZKmJp1dsmQ2EUE/V58YrYsJcIiV2DQxtaGwd0IsrEbyITEM8Oelr02CuMWrV/RO0uAJqvDN4SzVy9as4dSlNrTPtghgPJkRVZ3Pqp3qXooh8oYjhKk1vSh/ftilaM8+DN63kwiRPdfUoOHgR6fCN7UTZlvVVjSQwNUyV7Mh6ZleO2G3IxyZvZLG1A8lyv0g7WfMx4HV3hhN6JIiIZYATsLv2h/uDI/sbzwIEDRB4z2ccwtPphiNNT4L3EOgM50iwYz8NK2K5B952WePsVPDBgqEtG7oqwqCU2VlhRwiCsgBl4RtAC/cKObzLPSGe0h81taG1HcZlZEaBYZVp1ofC3MUf+kSC7nH91d0hUoBsfQFZq9x4Bi1i1U68zSxufpBtbVjTwiNivlnkMfcE95OPVDuumyGm1vx3PezPSKNQJ9g6+JXmK3FhwIMe5cJwxDC8RXKsfKiW2RuH4yhwZnumW1eIn3CjYK+oHLjTAibtdUUsncuBOjIDxo62b5d/+v8vcq/5WbgiFE9DklJ5UA9qtkbMRxJm129CLjtByOsQNc3Q+8lhfrTEEt/bug6nK/gu5gyXU=" # for dockerhub
-
+  - 2.4.1
+env:
+  global:
+    - DOCKER_USERNAME=kontenabot
+    - secure: "kvAs0Ys79sVx24cxuhJW1L4ABkemMCD2G767e8Vjp8VAbmgJBOiD+hU11ADe5/1ZDrDZ5NVsTqucVI4lyLohLzLU61AwQsgpNPcsBtBqhHvWdYnTVZhRz7v9xirXa3heS/jbxJxrWBgCRdgBLj1xWBHhQALJSDynKtqm5HbDOrfsB621KQ+WsunU5swou+cxKTye3nJZVDABaH8w8qFEJ0aUkeqNT2O4Tfgbr3reu6DQGKBpBuuSAzlwW1SFjaosW2Yedp+hpRgm1j9HHbao7i8dqv3BXckeMbEv4DUCWQqOWOsj62izTMDRqULNxxU547MPG9O7sq+yW4eC6B9SV4PqyCLeZVpRAgbz/u6YQmRLCquOyoWfaEKzWkC3kqmzn84K83qbvYW7GgG9p/JOCmFXb+StyvORV8LL6iB/D/W2oII3PTG7Mtj+6yRdzRGenYWY95LOTrR78VsCEy6iuAsnwsGKJmsiW/n7Yapgqf6mFwSvCJnMe0/POioo//TkuSSc7smGWQkLOatut0CNBaceFABMRRip4xGE8LUt1j7ql0qDOVoReqKe0XzaNuDi+Eu9cPL1cCSC4g1MWxFWsprYudaiHVY+k3F4nEsV+Mivms8uck2ae+Wv4blY2F5yX7VUP/F/nY57VIaTWbo4y8+TegNNTt6BiqAEF8cI8B4=" # for rubygems
+    - secure: "qj93XeMlWFsbXWBEBEOKMJTftM6FNlU5DdZRuzFmtysMS4KxY9z/PQuZ3+aldhUrFqghHwLLGYWIDtAPZb0k7VOM6jZUpXwam13rMkZKmJp1dsmQ2EUE/V58YrYsJcIiV2DQxtaGwd0IsrEbyITEM8Oelr02CuMWrV/RO0uAJqvDN4SzVy9as4dSlNrTPtghgPJkRVZ3Pqp3qXooh8oYjhKk1vSh/ftilaM8+DN63kwiRPdfUoOHgR6fCN7UTZlvVVjSQwNUyV7Mh6ZleO2G3IxyZvZLG1A8lyv0g7WfMx4HV3hhN6JIiIZYATsLv2h/uDI/sbzwIEDRB4z2ccwtPphiNNT4L3EOgM50iwYz8NK2K5B952WePsVPDBgqEtG7oqwqCU2VlhRwiCsgBl4RtAC/cKObzLPSGe0h81taG1HcZlZEaBYZVp1ofC3MUf+kSC7nH91d0hUoBsfQFZq9x4Bi1i1U68zSxufpBtbVjTwiNivlnkMfcE95OPVDuumyGm1vx3PezPSKNQJ9g6+JXmK3FhwIMe5cJwxDC8RXKsfKiW2RuH4yhwZnumW1eIn3CjYK+oHLjTAibtdUUsncuBOjIDxo62b5d/+v8vcq/5WbgiFE9DklJ5UA9qtkbMRxJm129CLjtByOsQNc3Q+8lhfrTEEt/bug6nK/gu5gyXU=" # for dockerhub
 cache: bundler
 script: bundle install && bundle exec rspec spec/
 
 deploy:
-  provider: rubygems
-  api_key: $GEM_TOKEN
-  gem: kontena-plugin-shell
-  on:
-    tags: true
-    rvm: 2.4.1
-
-after_success:
-  - if [ "$TRAVIS_RUBY_VERSION" == "2.4.1"] && [ ! -z "$DOCKER_PASSWORD" ] && [ ! -z "$TRAVIS_TAG" ]; then
-    docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
-    docker build -t kontena/kosh:latest . &&
-    docker tag kontena/kosh:latest kontena/kosh:latest &&
-    docker push kontena/kosh:latest;
-    fi
+  - provider: rubygems
+    api_key: $GEM_TOKEN
+    gem: kontena-plugin-shell
+    on:
+      tags: true
+      rvm: 2.4.1
+  - provider: script
+    script: ./build/edge.sh
+    on:
+      branch: fix/travis-build
+      rvm: 2.4.1
+  - provider: script
+    script: ./build/latest.sh
+    on:
+      tags: true
+      rvm: 2.4.1
