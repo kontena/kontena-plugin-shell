@@ -25,7 +25,7 @@ deploy:
   - provider: script
     script: ./build/edge.sh
     on:
-      branch: master
+      branch: fix/travis-build
       rvm: 2.4.1
   - provider: script
     script: ./build/latest.sh
