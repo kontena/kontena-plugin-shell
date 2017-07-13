@@ -4,6 +4,7 @@ MAINTAINER Kontena, Inc. <info@kontena.io>
 RUN apk update && apk --update add tzdata ruby ruby-irb ruby-rdoc ruby-bigdecimal \
     ruby-io-console ruby-json ca-certificates libssl1.0 openssl libstdc++
 
+ARG CLI_VERSION
 ADD . /app/build
 RUN apk --update add --virtual build-dependencies ruby-dev build-base && \
     gem install bundler --no-ri --no-rdoc && \
