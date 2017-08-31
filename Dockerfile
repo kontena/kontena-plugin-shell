@@ -12,7 +12,7 @@ RUN apk --update add --virtual build-dependencies ruby-dev build-base && \
     gem build kontena-plugin-shell.gemspec && \
     gem install --no-ri --no-rdoc `ls -t kontena-plugin-shell*.gem|head -1` && \
     gem install --no-ri --no-rdoc kontena-plugin-aws kontena-plugin-digitalocean \
-    kontena-plugin-packet kontena-plugin-upcloud && \
+    kontena-plugin-packet kontena-plugin-upcloud kontena-plugin-cloud && \
     rm -rf /app/build && \
     apk del build-dependencies
 
