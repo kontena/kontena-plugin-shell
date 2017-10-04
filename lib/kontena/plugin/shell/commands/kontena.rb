@@ -77,6 +77,7 @@ module Kontena::Plugin
 
         write.close
         output = read.read
+        print "\e[0m" # Reset terminal
         Process.wait(pid)
         Kontena.logger.debug { "Process #{pid} finished, #{output.size} bytes in result" }
 
