@@ -27,13 +27,17 @@ module Kontena::Plugin
           cmd.run([])
         end
       rescue Clamp::HelpWanted => ex
-        unless args.include?('--help') || args.include?('-h')
+        if args.include?('--help') || args.include?('-h')
+          puts cmd.class.help('')
+        else
           context.concat(args)
         end
       rescue SystemExit => ex
         puts Kontena.pastel.red('[Command exited with error]') unless ex.status.zero?
       rescue => ex
         puts Kontena.pastel.red("ERROR: #{ex.message}")
+      ensure
+        Thread.main['spinners'] && Thread.main['spinners'].map(&:kill) && Thread.main['spinners'] = nil
       end
 
       def subcommand_class
