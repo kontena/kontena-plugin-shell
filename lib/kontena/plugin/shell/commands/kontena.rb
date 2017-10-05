@@ -24,10 +24,14 @@ module Kontena::Plugin
         if cmd.subcommand_name && cmd.subcommand_name == 'shell'
           puts Kontena.pastel.red("Already running inside KOSH")
         else
-          cmd.run([])
+          if forked_run == :context
+            context.concat(args)
+          end
         end
       rescue Clamp::HelpWanted => ex
-        unless args.include?('--help') || args.include?('-h')
+        if args.include?('--help') || args.include?('-h')
+          puts subcommand_class.help('')
+        else
           context.concat(args)
         end
       rescue SystemExit => ex
@@ -39,7 +43,7 @@ module Kontena::Plugin
       end
 
       def subcommand_class
-        (context + args).reject { |t| t.start_with?('-') }.inject(Kontena::MainCommand) do |base, token|
+        result = (context + args).reject { |t| t.start_with?('-') }.inject(Kontena::MainCommand) do |base, token|
           if base.has_subcommands?
             sc = base.recognised_subcommands.find { |sc| sc.names.include?(token) }
             sc ? sc.subcommand_class : base
@@ -47,6 +51,41 @@ module Kontena::Plugin
             base
           end
         end
+        result
+      end
+
+      def forked_run
+        read, write = IO.pipe
+        pid = fork do
+          read.close
+          result = nil
+          exception = nil
+          begin
+            result = cmd.run([])
+          rescue Clamp::HelpWanted => ex
+            if args.include?('--help') || args.include?('-h')
+              puts cmd.class.help('').gsub(/^(\s+)\[OPTIONS\] SUB/, "\\1 SUB")
+            else
+              result = :context
+              exception = nil
+            end
+          rescue SystemExit, StandardError => ex
+            exception = ex
+          end
+          Marshal.dump({ result: result, exception: exception }, write)
+          exit(0)
+        end
+        Kontena.logger.debug { "Forked subcommand, pid: #{pid}" }
+
+        write.close
+        output = read.read
+        print "\e[0m" # Reset terminal
+        Process.wait(pid)
+        Kontena.logger.debug { "Process #{pid} finished, #{output.size} bytes in result" }
+
+        data = Marshal.load(output)
+        raise data[:exception] if data[:exception]
+        data[:result]
       end
     end
   end
