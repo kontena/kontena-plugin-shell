@@ -27,7 +27,9 @@ module Kontena::Plugin
           cmd.run([])
         end
       rescue Clamp::HelpWanted => ex
-        unless args.include?('--help') || args.include?('-h')
+        if args.include?('--help') || args.include?('-h')
+          puts cmd.class.help('')
+        else
           context.concat(args)
         end
       rescue SystemExit => ex
