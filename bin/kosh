@@ -16,7 +16,7 @@ end
 
 ARGV.unshift('shell')
 
-Kontena::PluginManager.instance.init
+Kontena::PluginManager.respond_to?(:instance) ? Kontena::PluginManager.instance.init : Kontena::PluginManager.init
 Kontena::MainCommand.run
 __END__
 Usage: kosh [options] [initial_context]
