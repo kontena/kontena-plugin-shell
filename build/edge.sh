@@ -11,4 +11,5 @@ if [ ! -z "$DOCKER_USERNAME" ] && [ ! -z "$DOCKER_PASSWORD" ]; then
     docker push kontena/kosh:edge
     docker push kontena/kosh:edge-cli-1.2
     docker push kontena/kosh:edge-cli-1.3
+    docker push kontena/kosh:edge-cli-1.4rc1
 fi
