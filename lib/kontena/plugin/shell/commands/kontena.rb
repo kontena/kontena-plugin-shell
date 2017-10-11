@@ -28,7 +28,7 @@ module Kontena::Plugin
         end
       rescue Clamp::HelpWanted => ex
         if args.include?('--help') || args.include?('-h')
-          puts cmd.class.help('')
+          puts subcommand_class.help('')
         else
           context.concat(args)
         end
