@@ -48,6 +48,13 @@ module Kontena::Plugin
           Process.setproctitle("kosh-runner")
           command.run
         end
+        trap('INT') {
+          begin
+            Process.kill('TERM', pid)
+          rescue Errno::ESRCH
+            raise SignalException, 'SIGINT'
+          end
+        }
         Process.waitpid(pid)
         config.reset_instance
       end
