@@ -23,9 +23,12 @@ deploy:
       tags: true
       rvm: 2.4.1
   - provider: script
-    script:
-      - ./build/edge.sh
-      - ./build/pre-edge.sh
+    script: ./build/pre-edge.sh
+    on:
+      branch: master
+      rvm: 2.4.1
+  - provider: script
+    script: ./build/edge.sh
     on:
       branch: master
       rvm: 2.4.1
