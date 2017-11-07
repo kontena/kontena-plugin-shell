@@ -27,12 +27,29 @@ module Kontena::Plugin
         tokens = buf.split(/\s(?=(?:[^"]|"[^"]*")*$)/).map(&:strip)
         runner = Shell.command(tokens.first) || Shell.command(context.first) || Kontena::Plugin::Shell::KontenaCommand
         command = runner.new(context, tokens, self)
+        if Gem.win_platform?
+          execute_command_win(command)
+        else
+          execute_command_nix(command)
+        end
+      end
+
+      def execute_command_win(command)
         old_trap = trap('INT', Proc.new { Thread.main[:command_thread] && Thread.main[:command_thread].kill })
         Thread.main[:command_thread] = Thread.new do
           command.run
         end
         Thread.main[:command_thread].join
         trap('INT', old_trap)
+      end
+
+      def execute_command_nix(command)
+        pid = fork do
+          Process.setproctitle("kosh-runner")
+          command.run
+        end
+        Process.waitpid(pid)
+        config.reset_instance
       end
 
       def run
