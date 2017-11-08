@@ -27,11 +27,18 @@ module Kontena::Plugin
         tokens = buf.split(/\s(?=(?:[^"]|"[^"]*")*$)/).map(&:strip)
         runner = Shell.command(tokens.first) || Shell.command(context.first) || Kontena::Plugin::Shell::KontenaCommand
         command = runner.new(context, tokens, self)
-        if fork_supported?
+        if fork_supported? && forkable_command?(command)
           execute_with_fork(command)
         else
           execute_with_thread(command)
         end
+      end
+
+      def forkable_command?(command)
+        return false if !command.is_a?(Kontena::Plugin::Shell::KontenaCommand)
+        return false if command.subcommand_class.klass.has_subcommands?
+
+        true
       end
 
       def fork_supported?
