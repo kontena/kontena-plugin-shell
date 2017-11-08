@@ -48,6 +48,7 @@ module Kontena::Plugin
       end
 
       def execute_with_fork(command)
+        start = Time.now
         pid = fork do
           Process.setproctitle("kosh-runner")
           command.run
@@ -60,7 +61,17 @@ module Kontena::Plugin
           end
         }
         Process.waitpid(pid)
-        config.reset_instance
+        if config_file_modified_since?(start)
+          puts ""
+          puts pastel.yellow("Config file has been modified, reloading configuration")
+          puts ""
+          config.reset_instance
+        end
+      end
+
+      def config_file_modified_since?(time)
+        return false unless config.config_file_available?
+        return true if File.mtime(config.config_filename) >= time
       end
 
       def run
