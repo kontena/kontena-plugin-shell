@@ -35,7 +35,7 @@ module Kontena::Plugin
       end
 
       def fork_supported?
-        !Gem.win_platform?
+        Process.respond_to?(:fork)
       end
 
       def execute_with_thread(command)
