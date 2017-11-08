@@ -27,12 +27,51 @@ module Kontena::Plugin
         tokens = buf.split(/\s(?=(?:[^"]|"[^"]*")*$)/).map(&:strip)
         runner = Shell.command(tokens.first) || Shell.command(context.first) || Kontena::Plugin::Shell::KontenaCommand
         command = runner.new(context, tokens, self)
+        if fork_supported?
+          execute_with_fork(command)
+        else
+          execute_with_thread(command)
+        end
+      end
+
+      def fork_supported?
+        Process.respond_to?(:fork)
+      end
+
+      def execute_with_thread(command)
         old_trap = trap('INT', Proc.new { Thread.main[:command_thread] && Thread.main[:command_thread].kill })
         Thread.main[:command_thread] = Thread.new do
           command.run
         end
         Thread.main[:command_thread].join
         trap('INT', old_trap)
+      end
+
+      def execute_with_fork(command)
+        start = Time.now
+        pid = fork do
+          Process.setproctitle("kosh-runner")
+          command.run
+        end
+        trap('INT') {
+          begin
+            Process.kill('TERM', pid)
+          rescue Errno::ESRCH
+            raise SignalException, 'SIGINT'
+          end
+        }
+        Process.waitpid(pid)
+        if config_file_modified_since?(start)
+          puts ""
+          puts pastel.yellow("Config file has been modified, reloading configuration")
+          puts ""
+          config.reset_instance
+        end
+      end
+
+      def config_file_modified_since?(time)
+        return false unless config.config_file_available?
+        return true if File.mtime(config.config_filename) >= time
       end
 
       def run
