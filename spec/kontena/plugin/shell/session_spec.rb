@@ -8,6 +8,7 @@ describe Kontena::Plugin::Shell::Session do
   let(:subject) { described_class.new(context) }
 
   it 'runs commands' do
+    allow(subject).to receive(:fork_supported?).and_return(false)
     expect(Readline).to receive(:readline).and_return('exit')
     expect{subject.run}.to output(/Bye/).to_stdout.and raise_error(SystemExit)
   end
