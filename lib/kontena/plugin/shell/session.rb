@@ -92,7 +92,20 @@ module Kontena::Plugin
       end
 
       def prompt
-        "#{master_name}/#{grid_name} #{pastel.yellow(context)} #{caret} "
+        if master_name && master_name.include?('/'.freeze)
+          org, name = master_name.split('/')
+          "#{pastel.bright_cyan(org)} / #{pastel.cyan(name)} #{pastel.yellow(context)} #{caret} "
+        elsif master_name && grid_name
+          "#{pastel.bright_cyan(master_name)} / #{pastel.cyan(grid_name)} #{pastel.yellow(context)} #{caret} "
+        elsif master_name
+          "#{pastel.bright_cyan(master_name)} / #{pastel.red('<no grid>')} #{pastel.yellow(context)} #{caret} "
+        else
+          if org = ENV['KONTENA_ORGANIZATION']
+            "#{pastel.bright_cyan(org)} #{pastel.yellow(context)} #{caret} "
+          else
+            "#{pastel.yellow(context)} #{caret} "
+          end
+        end
       end
 
       def caret
@@ -100,17 +113,17 @@ module Kontena::Plugin
       end
 
       def master_name
-        config.current_master ? pastel.blue(config.current_master.name) : pastel.red('<no master>')
+        config.current_master.name if config.current_master
       end
 
       def grid_name
-        config.current_grid ? pastel.blue(config.current_grid) : pastel.red('<no grid>')
+        config.current_grid
       end
     end
   end
 end
 __END__
- _               _
+_               _
 | | _____  _ __ | |_ ___ _ __   __ _
 | |/ / _ \| '_ \| __/ _ \ '_ \ / _` |
 |   < (_) | | | | ||  __/ | | | (_| |
