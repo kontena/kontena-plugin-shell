@@ -93,7 +93,17 @@ module Kontena::Plugin
         end
 
         # Hook stack command kontena.yml content prompting
-        require 'kontena/plugin/shell/callbacks/stack_file'
+        if Gem::Version.new(Kontena::Cli::VERSION) >= Gem::Version.new('1.4.0')
+          require 'kontena/plugin/shell/prompt_loader'
+        else
+          require 'kontena/cli/stacks/validate_command'
+          require 'kontena/cli/stacks/install_command'
+          require 'kontena/cli/stacks/upgrade_command'
+          require 'kontena/plugin/shell/stacks_common_ext'
+          Kontena::Cli::Stacks::ValidateCommand.send(:include, Kontena::Plugin::Shell::StacksCommonExt)
+          Kontena::Cli::Stacks::InstallCommand.send(:include, Kontena::Plugin::Shell::StacksCommonExt)
+          Kontena::Cli::Stacks::UpgradeCommand.send(:include, Kontena::Plugin::Shell::StacksCommonExt)
+        end
 
         Readline.completion_proc = Proc.new do |word|
           line = Readline.line_buffer
