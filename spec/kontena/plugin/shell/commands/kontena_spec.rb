@@ -1,7 +1,9 @@
 describe Kontena::Plugin::Shell::KontenaCommand do
   context '#run' do
     it 'should be able to run kontena commands' do
-      expect{described_class.new([], ['version', '--cli']).run}.to output(/cli:/).to_stdout
+      subject = described_class.new([], ['version', '--cli'])
+      allow(subject).to receive(:fork_supported?).and_return(false)
+      expect{subject.run}.to output(/cli:/).to_stdout
     end
 
     it 'should not run a shell inside a shell' do

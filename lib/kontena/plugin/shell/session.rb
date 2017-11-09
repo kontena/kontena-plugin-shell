@@ -24,56 +24,17 @@ module Kontena::Plugin
       end
 
       def run_command(buf)
+        start = Time.now
         tokens = buf.split(/\s(?=(?:[^"]|"[^"]*")*$)/).map(&:strip)
         runner = Shell.command(tokens.first) || Shell.command(context.first) || Kontena::Plugin::Shell::KontenaCommand
-        command = runner.new(context, tokens, self)
-        if fork_supported? && forkable_command?(command)
-          execute_with_fork(command)
-        else
-          execute_with_thread(command)
-        end
-      end
-
-      def forkable_command?(command)
-        return false if !command.is_a?(Kontena::Plugin::Shell::KontenaCommand)
-        return false if command.subcommand_class.klass.has_subcommands?
-
-        true
-      end
-
-      def fork_supported?
-        Process.respond_to?(:fork)
-      end
-
-      def execute_with_thread(command)
-        old_trap = trap('INT', Proc.new { Thread.main[:command_thread] && Thread.main[:command_thread].kill })
-        Thread.main[:command_thread] = Thread.new do
-          command.run
-        end
-        Thread.main[:command_thread].join
-        trap('INT', old_trap)
-      end
-
-      def execute_with_fork(command)
-        start = Time.now
-        pid = fork do
-          Process.setproctitle("kosh-runner")
-          command.run
-        end
-        trap('INT') {
-          begin
-            Process.kill('TERM', pid)
-          rescue Errno::ESRCH
-            raise SignalException, 'SIGINT'
-          end
-        }
-        Process.waitpid(pid)
+        result = runner.new(context, tokens, self).run
         if config_file_modified_since?(start)
           puts ""
           puts pastel.yellow("Config file has been modified, reloading configuration")
           puts ""
           config.reset_instance
         end
+        result
       end
 
       def config_file_modified_since?(time)
