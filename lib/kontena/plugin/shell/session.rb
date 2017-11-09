@@ -36,7 +36,7 @@ module Kontena::Plugin
 
       def forkable_command?(command)
         return false if !command.is_a?(Kontena::Plugin::Shell::KontenaCommand)
-        return false if command.subcommand_class.klass.has_subcommands?
+        return false if command.subcommand_class.has_subcommands?
 
         true
       end
