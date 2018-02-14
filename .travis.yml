@@ -3,10 +3,10 @@ language: ruby
 services:
   - docker
 rvm:
-  - 2.1.10
-  - 2.2.6
-  - 2.3.3
-  - 2.4.1
+  - 2.2.8
+  - 2.3.6
+  - 2.4.2
+  - 2.5.0
 env:
   global:
     - DOCKER_USERNAME=kontenabot
@@ -21,12 +21,12 @@ deploy:
     gem: kontena-plugin-shell
     on:
       tags: true
-      rvm: 2.4.1
+      rvm: 2.5.0
   - provider: script
     script: ./build/pre-edge.sh
     on:
       branch: master
-      rvm: 2.4.1
+      rvm: 2.5.0
   - provider: script
     script: ./build/edge.sh
     on:
@@ -36,4 +36,4 @@ deploy:
     script: ./build/latest.sh
     on:
       tags: true
-      rvm: 2.4.1
+      rvm: 2.5.0
